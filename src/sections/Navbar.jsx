@@ -1,87 +1,57 @@
+// Navbar.jsx
 import { useState } from "react";
-import {
-  SignedIn,
-  SignedOut,
-  SignInButton,
-  UserButton,
-} from "@clerk/clerk-react";
-import { Link } from "react-router-dom"; // Corrected import from react-router
+import { Link } from "react-router-dom";
 import { Menu, X } from "lucide-react";
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
 
-  const toggle = () => {
-    setIsOpen((prevOpen) => !prevOpen);
-  };
-
-  const NavItems = () => (
-    <ul className="flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-8 items-center">
-      <li className="text-amber-600 hover:text-amber-800 hover:underline transition-colors duration-200 font-bold text-2xl">
-        <Link to="/customize">Customize</Link>
-      </li>
-      <li className="text-amber-600 hover:text-amber-800 hover:underline transition-colors duration-200 font-bold text-2xl">
-        <a href="#about">About Us</a>
-      </li>
-      <li className="text-amber-600 hover:text-amber-800 hover:underline transition-colors duration-200 font-bold text-2xl">
-        <a href="#contact">Contact Us</a>
-      </li>
-      <li className="text-amber-600 hover:text-amber-800 transition-colors duration-200 font-bold text-xl hover:underline">
-        <SignedOut>
-          <SignInButton />
-        </SignedOut>
-        <SignedIn>
-          <UserButton />
-        </SignedIn>
-      </li>
-    </ul>
-  );
-
   return (
-    <header className="fixed top-0 w-full z-50 bg-white border shadow-md h-16 p-4 ">
-      {/* <X className="text-black"/> */}
-      <div className="mx-auto sm:px-4 lg:px-12">
-        {/* Flex container for the navbar */}
-        <div className="flex  justify-between items-center py-5w-8/12">
-          {/* Left side: Home route */}
-
-          <a href="/" className="text-amber-600 hover:text-amber-800 font-bold text-2xl transition-colors duration-200 inline-flex items-center space-x-2">
-  {/* Logo image */}
-  <img src="./assets/logo.svg" alt="logo" width={32} />
-  
-  {/* FurnoExpress text */}
-  <span className="hidden sm:inline">FurnoExpress</span>
-  
-</a>
-
-
-          {/* Toggle button for mobile view */}
-          <button onClick={toggle} className="sm:hidden mx-4">
-            {isOpen ? (
-              <X className="w-6 h-6 text-black" />
-            ) : (
-              <Menu className="w-6 h-6 text-black" />
-            )}
-          </button>
-
-          {/* Navbar for larger screens */}
-          <nav className="hidden sm:flex">
-            <NavItems />
-          </nav>
+    <nav className='fixed top-0 left-0 w-full bg-white shadow-md z-50'>
+      <div className='max-w-8xl mx-auto px-4 sm:px-6 py-3 flex justify-between items-center'>
+        {/* Logo */}
+        <div className="flex items-center space-x-2">
+          <img src="./assets/logo.svg" alt="logo" width={40} />
+          <Link to="/" className='text-2xl font-bold text-amber-600'>FurnoXpress</Link>
         </div>
+
+        {/* Desktop Menu */}
+        <div className='hidden md:flex items-center space-x-6'>
+          <Link to='/' className='text-gray-700 hover:text-amber-600 px-3 py-2'>Home</Link>
+          <Link to='/offerings' className='text-gray-700 hover:text-amber-600 px-3 py-2'>Offerings</Link>
+          <Link to='/partner' className='text-gray-700 hover:text-amber-600 px-3 py-2'>Partner With Us</Link>
+          <Link to='/contact' className='text-gray-700 hover:text-amber-600 px-3 py-2'>Contact</Link>
+          <Link to='/about' className='text-gray-700 hover:text-amber-600 px-3 py-2'>About</Link>
+          <Link to='/faq' className='text-gray-700 hover:text-amber-600 px-3 py-2'>FAQs</Link>
+          <Link to='/sign-in' className='ml-4 px-4 py-2 bg-amber-600 text-white rounded-lg hover:bg-amber-800 transition-all duration-200'>
+            Sign In
+          </Link>
+        </div>
+
+        {/* Mobile Menu Button */}
+        <button 
+          onClick={() => setIsOpen(!isOpen)}
+          className='md:hidden p-2 rounded-lg hover:bg-gray-100 transition-colors'
+        >
+          {isOpen ? <X size={24} /> : <Menu size={24} />}
+        </button>
       </div>
 
-      {/* Dropdown for mobile view */}
-      <div
-        className={`overflow-hidden transition-all duration-300 ease-in-out ${
-          isOpen ? "max-h-screen" : "max-h-0"
-        }`}
-      >
-        <nav className=" mx-4 sm:hidden bg-white">
-          <NavItems />
-        </nav>
-      </div>
-    </header>
+      {/* Mobile Menu */}
+      {isOpen && (
+        <div className='md:hidden absolute w-full bg-white shadow-lg py-4 px-6 space-y-3'>
+          <Link to='/' className='block py-2 text-gray-700 hover:text-amber-600'>Home</Link>
+          <Link to='/offerings' className='block py-2 text-gray-700 hover:text-amber-600'>Offerings</Link>
+          <Link to='/partner' className='block py-2 text-gray-700 hover:text-amber-600'>Partner With Us</Link>
+          <Link to='/contact' className='block py-2 text-gray-700 hover:text-amber-600'>Contact</Link>
+          <Link to='/about' className='block py-2 text-gray-700 hover:text-amber-600'>About</Link>
+          <Link to='/faq' className='block py-2 text-gray-700 hover:text-amber-600'>FAQs</Link>
+          <Link to='/sign-in' className='block mt-4 px-4 py-2 bg-amber-600 text-white rounded-lg text-center hover:bg-amber-800'>
+            Sign In
+          </Link>
+        </div>
+      )}
+    </nav>
   );
 };
 

@@ -18,6 +18,12 @@ const App = () => {
         <Route path="/" element={<Hero/>}/>
         <Route path="/customize" element={<Customize/>}/>
       </Routes>
+
+      
+      <About />
+      <ContactUs />
+      <Footer />
+
       
       
       
